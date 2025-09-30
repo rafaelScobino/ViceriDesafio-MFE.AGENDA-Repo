@@ -5,7 +5,7 @@ module.exports = withModuleFederationPlugin({
   name: 'mfe-agenda',
 
   exposes: {
-    './Component': './src/app/app.component.ts',
+    './agenda': './src/app/app.component.ts',
   },
 
   shared: {
