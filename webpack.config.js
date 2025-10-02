@@ -2,10 +2,10 @@ const { shareAll, withModuleFederationPlugin } = require('@angular-architects/mo
 
 module.exports = withModuleFederationPlugin({
 
-  name: 'mfe-agenda',
+  name: 'mfeAgenda',
 
   exposes: {
-    './agenda': './src/app/app.component.ts',
+    './routes': './src/app/app.routes.ts',
   },
 
   shared: {
