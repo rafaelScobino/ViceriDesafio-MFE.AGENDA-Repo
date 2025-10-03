@@ -1,1 +1,15 @@
-<p>schedule-calendar works!</p>
+<p-table [value]="hours" [scrollable]="true" [showGridlines]="true" scrollHeight="80vh" styleClass="calendar-table">
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 60px;">Hora</th>
+      <th *ngFor="let day of weekDays">{{ day }}</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-hour>
+    <tr>
+      <td>{{ hour }}</td>
+      <td *ngFor="let day of weekDays" class="calendar-cell"></td>
+    </tr>
+  </ng-template>
+</p-table>

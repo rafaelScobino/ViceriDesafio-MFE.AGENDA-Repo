@@ -1,1 +1,71 @@
-<p>event-form works!</p>
+<form [formGroup]="formGroup">
+
+  <div class="w-full h-full flex flex-col gap-6 p-6">
+    <!-- Título -->
+    <div class="w-full">
+      <p-floatlabel variant="on">
+        <input pInputText id="titulo" formControlName="titulo" autocomplete="off" class="w-full" />
+        <label for="titulo">Título</label>
+      </p-floatlabel>
+    </div>
+
+    <!-- Assunto -->
+    <div class="w-full">
+      <p-floatlabel variant="on">
+        <input pInputText id="assunto" formControlName="assunto" autocomplete="off" class="w-full" />
+        <label for="assunto">Assunto</label>
+      </p-floatlabel>
+    </div>
+
+    <!-- Presencial ou Remoto -->
+    <div class="flex items-center gap-6 w-full">
+      <div class="flex items-center gap-2">
+        <p-checkbox formControlName="presencial" binary="true" inputId="presencial"></p-checkbox>
+        <label for="presencial">Presencial</label>
+      </div>
+      <div class="flex items-center gap-2">
+        <p-checkbox formControlName="remoto" binary="true" inputId="remoto"></p-checkbox>
+        <label for="remoto">Remoto</label>
+      </div>
+    </div>
+
+    <!-- Local -->
+    <div class="w-full">
+      <p-floatlabel variant="on">
+        <input pInputText id="local" formControlName="local" autocomplete="off" class="w-full" />
+        <label for="local">Local</label>
+      </p-floatlabel>
+    </div>
+
+    <!-- Participantes -->
+    <div class="w-full">
+      <label for="participantes" class="block mb-2 font-medium">Participantes</label>
+      <p-multiSelect
+        [options]="participantesOptions"
+        formControlName="participantes"
+        optionLabel="name"
+        placeholder="Selecione os participantes"
+        display="chip"
+        class="w-full"
+      >
+      </p-multiSelect>
+    </div>
+
+    <!-- Descrição -->
+    <div class="w-full">
+   <p-floatlabel variant="on">
+    <textarea pTextarea id="over_label" rows="5" cols="30" style="resize: none" class="h-full w-full"></textarea>
+    <label for="on_label">Descrição</label>
+</p-floatlabel>
+    </div>
+
+
+
+    <!-- Data e Hora -->
+    <div class="w-full">
+      <label for="dataHora" class="block mb-2 font-medium">Data e Hora</label>
+      <p-datepicker formControlName="dataHora" [showIcon]="true" inputId="dataHora" [showOnFocus]="false" class="w-full" />
+    </div>
+  </div>
+
+</form>

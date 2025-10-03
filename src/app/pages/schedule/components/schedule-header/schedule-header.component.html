@@ -1,1 +1,48 @@
-<p>schedule-header works!</p>
+<div class="flex justify-between items-center w-full my-auto py-1 px-3">
+  <div class="flex items-center gap-1">
+    <p-calendar
+      [iconDisplay]="'input'"
+      [showIcon]="true"
+      inputId="icondisplay"
+      [placeholder]="'Janeiro 2022'"
+      [styleClass]="'border-none'"
+      view="month"
+      dateFormat="MM yy"
+      [readonlyInput]="true"
+    >
+    </p-calendar>
+
+    <div class="flex items-center gap-1">
+      <button
+        pButton
+        icon="pi pi-chevron-left"
+        class="p-button-text p-button-sm"
+        (click)="prevWeek()"
+      ></button>
+      <span class="text-sm font-medium px-2">{{ currentWeekLabel }}</span>
+      <button
+        pButton
+        icon="pi pi-chevron-right"
+        class="p-button-text p-button-sm"
+        (click)="nextWeek()"
+      ></button>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-5">
+    <p-button
+      icon="pi pi-search"
+      [rounded]="true"
+      [raised]="true"
+      severity="secondary"
+    />
+    <p-button
+      raised="true"
+      label="Add Evento"
+      icon="pi pi-plus"
+      severity="info"
+      class="w-full md:w-auto"
+      (onClick)="openModalEvento()"
+    />
+  </div>
+</div>

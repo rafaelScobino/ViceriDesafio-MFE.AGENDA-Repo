@@ -1,5 +1,32 @@
-<app-schedule-header></app-schedule-header>
-<app-schedule-menu></app-schedule-menu>
-<app-schedule-calendar></app-schedule-calendar>
+<div class="agenda_height flex h-full">
 
-<app-modal-event></app-modal-event>
+
+  <div class="flex-none " style="width: 15%;">
+    <app-schedule-menu></app-schedule-menu>
+  </div>
+
+
+  <div class="flex flex-col flex-1 ">
+
+
+    <div class="flex-none " style="height: 10%;">
+      <app-schedule-header
+      (_openModalEvento)="onOpenModalEvento()"
+      ></app-schedule-header>
+    </div>
+
+
+    <div class="flex-1 ">
+      <app-schedule-calendar></app-schedule-calendar>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<app-modal-event
+#modalEvent
+></app-modal-event>
