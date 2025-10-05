@@ -1,28 +1,50 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DatePicker } from 'primeng/datepicker';
 import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-schedule-menu',
   standalone: true,
-  imports: [DatePicker,CommonModule],
+  imports: [DatePicker,CommonModule,FormsModule],
   templateUrl: './schedule-menu.component.html',
   styleUrl: './schedule-menu.component.scss'
 })
-export class ScheduleMenuComponent {
-  @Input() rangeSelector:number = 0;
-@Input() todayEvents = [
-  'Reunião com equipe às 10h',
-  'Entrega do relatório até 14h',
-  'Revisar documento do projeto'
-];
+export class ScheduleMenuComponent implements OnChanges {
 
-@Input() tomorrowEvents = [
-  'Apresentação ao cliente às 09h',
-  'Enviar e-mails pendentes',
-  'Planejamento da sprint'
-];
+  rangeDates:Date [] = []
+  @Input() rangeSelector:(number | null)[] = [];
+  @Input() month:Date = new Date();
+@Input() todayEvents:string[] = [];
+
+@Input() tomorrowEvents:string[] = [];
+
+
+ngOnChanges(changes: SimpleChanges): void {
+    if (changes['rangeSelector'] || changes['month']) {
+        this.setRange();
+    }
+}
+
+
+
+
+setRange(){
+  this.rangeDates = [];
+  this.rangeSelector.forEach((d)=>{
+
+    if(!d) return
+
+    const month = this.month.getMonth();
+const year = this.month.getFullYear();
+
+console.log(d)
+    this.rangeDates.push(new Date(year,month,d))
+
+  })
+
+}
 
 
 }

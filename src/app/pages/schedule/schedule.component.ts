@@ -5,8 +5,12 @@ import { ScheduleMenuComponent } from './components/schedule-menu/schedule-menu.
 import { ScheduleCalendarComponent } from './components/schedule-calendar/schedule-calendar.component';
 import { ModalEventComponent } from './components/modals/modal-event/modal-event.component';
 import { SplitterModule } from 'primeng/splitter';
-import { AgendaSharedService } from '../../shared/services/agenda-shared.service';
+import {
+  AgendaSharedService,
+  IAgendaConfig,
+} from '../../shared/services/agenda-shared.service';
 import { Subscription } from 'rxjs';
+import { TableModule } from 'primeng/table';
 @Component({
   selector: 'app-schedule',
   standalone: true,
@@ -15,54 +19,95 @@ import { Subscription } from 'rxjs';
     ScheduleMenuComponent,
     ScheduleCalendarComponent,
     ModalEventComponent,
-    SplitterModule
+    SplitterModule,
+    TableModule,
   ],
   templateUrl: './schedule.component.html',
-  styleUrl: './schedule.component.scss'
+  styleUrl: './schedule.component.scss',
 })
 export class ScheduleComponent implements OnInit, OnDestroy {
-
   @ViewChild('modalEvent') modalEvent!: ModalEventComponent;
 
-private stateSubscription!: Subscription;
+  private subscriptions = new Subscription();
+
   agendaList: AgendaEvento[] = [];
-  dateSelector:Date  = new Date();
-  semanaSelector:number = 1;
-  rangeSelector: number = 1;
-  todayEvents:string[] = [];
-  tomorrowEvents:string[] = [];
+  month: Date = new Date();
+  monthWeekDays: (number | null)[] = [];
+  todayEvents: string[] = [];
+  tomorrowEvents: string[] = [];
 
+  constructor(private stateService: AgendaSharedService) {}
 
-constructor(private stateService:AgendaSharedService){}
+  ngOnInit(): void {
+    this.subscriptions.add(
+      this.stateService.getAgendaConfigState().subscribe((config) => {
+        this.setMonthWeekDays(config);
 
-ngOnInit(): void {
-  this.stateSubscription = this.stateService.getState().subscribe((agendaList)=>{
-    this.agendaList = agendaList;
-    console.log(this.agendaList);
-  })
-}
+        this.month = config.date;
+      })
+    );
 
+    this.subscriptions.add(
+      this.stateService.getState().subscribe((list) => {
 
-  onOpenModalEvento(){
-    this.modalEvent.open()
+        this.setActualEvents(list)
+        this.agendaList = list
+
+      })
+    );
   }
 
+  setMonthWeekDays(config: IAgendaConfig) {
+    const { date, week } = config;
 
-  submitEvento(e:AgendaEvento){
-    if(!e) return
+    console.log(config);
+    const ano = date.getFullYear();
+    const mes = date.getMonth();
+
+    const primeiroDia = new Date(ano, mes, 1);
+    const primeiroDiaSemana = primeiroDia.getDay();
+    const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+
+    const diaInicial = (week - 1) * 7 - primeiroDiaSemana + 1;
+    let dias: (number | null)[] = [];
+
+    for (let i = 0; i < 7; i++) {
+      let dia = diaInicial + i;
+      dias.push(dia > 0 && dia <= diasNoMes ? dia : null);
+    }
+    this.monthWeekDays = dias;
+    console.log(this.monthWeekDays);
+  }
+
+  setActualEvents(list:AgendaEvento[]){
+
+    const today = new Date();
+    const tomorrow = new Date(today.getFullYear(),today.getMonth(),today.getDate()+1)
+
+    list.forEach((e) =>{
+
+      if(e.data.getDay() == today.getDay()){
+          if(this.todayEvents.some(te => te == e.titulo  )) return
+        this.todayEvents.push(e.titulo)
+      }
+      if(e.data.getDay() == tomorrow.getDay()){
+        if(this.tomorrowEvents.some(te => te == e.titulo  )) return
+        this.tomorrowEvents.push(e.titulo)
+      }
+
+    })
+  }
+
+  onOpenModalEvento() {
+    this.modalEvent.open();
+  }
+
+  submitEvento(e: AgendaEvento) {
+    if (!e) return;
     this.stateService.setState(e);
   }
 
-  changeDate(e: Date) {
-this.stateService.setAgendaConfigState({date:e});
-}
-changeWeek(e: number) {
-this.stateService.setAgendaConfigState({week:e});
-}
-
-ngOnDestroy(){
-  this.stateSubscription.unsubscribe()
-}
-
-
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
 }

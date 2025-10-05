@@ -1,32 +1,36 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { Calendar } from 'primeng/calendar';
-import { DatePickerModule, DatePickerMonthChangeEvent } from 'primeng/datepicker';
+import {
+  DatePickerModule,
+  DatePickerMonthChangeEvent,
+} from 'primeng/datepicker';
+import { FormsModule } from '@angular/forms';
+import { AgendaSharedService } from '../../../../shared/services/agenda-shared.service';
 @Component({
   selector: 'app-schedule-header',
   standalone: true,
-  imports: [ButtonModule,DatePickerModule],
+  imports: [ButtonModule, DatePickerModule, FormsModule],
   templateUrl: './schedule-header.component.html',
-  styleUrl: './schedule-header.component.scss'
+  styleUrl: './schedule-header.component.scss',
 })
 export class ScheduleHeaderComponent {
- @Output() _openModalEvento = new EventEmitter<void>();
-  @Output() weekEmitter = new EventEmitter<number>();
-    @Output() dateEmitter = new EventEmitter<Date>();
+  @Output() _openModalEvento = new EventEmitter<void>();
 
+  @Input() monthSelector: Date = new Date();
 
+  constructor(private stateService: AgendaSharedService) {}
 
-dateSelector :Date = new Date();
-semanaSelector: number = 1;
-currentWeekLabel = `Semana ${this.semanaSelector}`;
-
+  dateSelector: Date = new Date();
+  semanaSelector: number = 1;
+  currentWeekLabel = `Semana ${this.semanaSelector}`;
 
   prevWeek() {
     if (this.semanaSelector > 1) {
       this.semanaSelector--;
       this.updateLabel();
     }
-    this.weekEmitter.emit(this.semanaSelector)
+    this.changeWeek(this.semanaSelector);
   }
 
   nextWeek() {
@@ -34,19 +38,26 @@ currentWeekLabel = `Semana ${this.semanaSelector}`;
       this.semanaSelector++;
       this.updateLabel();
     }
-    this.weekEmitter.emit(this.semanaSelector)
+    this.changeWeek(this.semanaSelector);
+  }
+
+  changeMonth(e: Date) {
+    console.log(e);
+    this.changeDate(e);
+  }
+
+  changeDate(e: Date) {
+    this.stateService.setAgendaConfigState({ date: e });
+  }
+  changeWeek(e: number) {
+    this.stateService.setAgendaConfigState({ week: e });
   }
 
   updateLabel() {
     this.currentWeekLabel = `Semana ${this.semanaSelector}`;
   }
 
-  changeMonth(e:Date) {
-    console.log(e)
-    this.dateEmitter.emit(e);
-}
-
-  openModalEvento(){
-   this._openModalEvento.emit();
+  openModalEvento() {
+    this._openModalEvento.emit();
   }
 }

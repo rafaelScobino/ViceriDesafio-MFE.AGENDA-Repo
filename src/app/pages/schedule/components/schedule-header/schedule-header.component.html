@@ -6,6 +6,7 @@
       inputId="icondisplay"
       [placeholder]="'Janeiro 2022'"
       [styleClass]="'border-none'"
+      [(ngModel)]="monthSelector"
       (onSelect)="changeMonth($event)"
       view="month"
       dateFormat="MM yy"

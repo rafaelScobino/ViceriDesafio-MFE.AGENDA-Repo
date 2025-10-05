@@ -22,8 +22,9 @@
 
       <td *ngFor="let dayIndex of dayIndexes">
         <ng-container *ngIf="getEvento(hour.hour, dayIndex) as evento">
-          <div class="bg-blue-500 text-white text-sm rounded p-1">
-            {{ evento.titulo }}
+          <div class=" flex flex-col bg-blue-500 text-white text-md bold rounded p-1">
+            <p>{{ evento.titulo }}</p>
+            <p>{{evento.assunto}}</p>
           </div>
         </ng-container>
       </td>
