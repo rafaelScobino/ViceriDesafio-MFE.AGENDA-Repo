@@ -39,7 +39,21 @@ export class AgendaSharedService {
     this.initalAgendaList = [...this.initalAgendaList, newEvento];
 
     this.state$.next(this.initalAgendaList);
+      this.saveAgendaToStorage();
+
     console.log(this.state$);
+  }
+
+  private saveAgendaToStorage() {
+    const simplified = this.initalAgendaList.map(e => ({
+      titulo: e.titulo,
+      assunto: e.assunto,
+      isPresencial: e.isPresencial,
+      participantes: e.participantes,
+      descricao: e.descricao,
+      data: e.data
+    }));
+    localStorage.setItem('agendaList', JSON.stringify(simplified));
   }
 
   constructor() {}
