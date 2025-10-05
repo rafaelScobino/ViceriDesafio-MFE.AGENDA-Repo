@@ -1,10 +1,16 @@
-<form [formGroup]="formGroup">
-
+<form [formGroup]="formEvent">
   <div class="w-full h-full flex flex-col gap-6 p-6">
     <!-- Título -->
     <div class="w-full">
       <p-floatlabel variant="on">
-        <input pInputText id="titulo" formControlName="titulo" autocomplete="off" class="w-full" />
+        <input
+          pInputText
+          id="titulo"
+          formControlName="titulo"
+          autocomplete="off"
+          class="w-full"
+           [ngClass]="{'ng-invalid ng-dirty':(formEvent.get('titulo')?.invalid)}"
+        />
         <label for="titulo">Título</label>
       </p-floatlabel>
     </div>
@@ -12,7 +18,13 @@
     <!-- Assunto -->
     <div class="w-full">
       <p-floatlabel variant="on">
-        <input pInputText id="assunto" formControlName="assunto" autocomplete="off" class="w-full" />
+        <input
+          pInputText
+          id="assunto"
+          formControlName="assunto"
+          autocomplete="off"
+          class="w-full"
+        />
         <label for="assunto">Assunto</label>
       </p-floatlabel>
     </div>
@@ -20,26 +32,44 @@
     <!-- Presencial ou Remoto -->
     <div class="flex items-center gap-6 w-full">
       <div class="flex items-center gap-2">
-        <p-checkbox formControlName="presencial" binary="true" inputId="presencial"></p-checkbox>
-        <label for="presencial">Presencial</label>
+        <p-radioButton
+          formControlName="isPresencial"
+          name="isPresencial"
+          value="true"
+          inputId="isPresencialSim"
+        ></p-radioButton>
+        <label for="isPresencialSim">Presencial</label>
       </div>
       <div class="flex items-center gap-2">
-        <p-checkbox formControlName="remoto" binary="true" inputId="remoto"></p-checkbox>
-        <label for="remoto">Remoto</label>
+        <p-radioButton
+          formControlName="isPresencial"
+          name="isPresencial"
+          value="false"
+          inputId="isPresencialNao"
+        ></p-radioButton>
+        <label for="isPresencialNao">Remoto</label>
       </div>
     </div>
 
     <!-- Local -->
     <div class="w-full">
       <p-floatlabel variant="on">
-        <input pInputText id="local" formControlName="local" autocomplete="off" class="w-full" />
+        <input
+          pInputText
+          id="local"
+          formControlName="local"
+          autocomplete="off"
+          class="w-full"
+        />
         <label for="local">Local</label>
       </p-floatlabel>
     </div>
 
     <!-- Participantes -->
     <div class="w-full">
-      <label for="participantes" class="block mb-2 font-medium">Participantes</label>
+      <label for="participantes" class="block mb-2 font-medium"
+        >Participantes</label
+      >
       <p-multiSelect
         [options]="participantesOptions"
         formControlName="participantes"
@@ -53,19 +83,35 @@
 
     <!-- Descrição -->
     <div class="w-full">
-   <p-floatlabel variant="on">
-    <textarea pTextarea id="over_label" rows="5" cols="30" style="resize: none" class="h-full w-full"></textarea>
-    <label for="on_label">Descrição</label>
-</p-floatlabel>
+      <p-floatlabel variant="on">
+        <textarea
+          pTextarea
+          formControlName="descricao"
+          id="over_label"
+          rows="5"
+          cols="30"
+          style="resize: none"
+          class="h-full w-full"
+        ></textarea>
+        <label for="on_label">Descrição</label>
+      </p-floatlabel>
     </div>
-
-
 
     <!-- Data e Hora -->
     <div class="w-full">
       <label for="dataHora" class="block mb-2 font-medium">Data e Hora</label>
-      <p-datepicker formControlName="dataHora" [showIcon]="true" inputId="dataHora" [showOnFocus]="false" class="w-full" />
+      <p-datepicker
+        formControlName="data"
+        [showIcon]="true"
+        inputId="data"
+        [showOnFocus]="true"
+        [showTime]="true"
+        [hourFormat]="'24'"
+        dateFormat="dd/mm/yy"
+        placeholder="Selecione data e hora"
+        class="w-full"
+        [ngClass]="{'ng-invalid ng-dirty':(formEvent.get('data')?.invalid)}"
+      />
     </div>
   </div>
-
 </form>

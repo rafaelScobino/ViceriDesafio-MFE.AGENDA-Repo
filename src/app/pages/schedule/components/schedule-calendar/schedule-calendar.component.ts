@@ -10,7 +10,7 @@ import { CalendarModule } from 'primeng/calendar';
   styleUrl: './schedule-calendar.component.scss'
 })
 export class ScheduleCalendarComponent {
-weekDays = ["Seg", "Ter", "Qua", "Qui", "Sex"];
+weekDays = ["Dom","Seg", "Ter", "Qua", "Qui", "Sex","Sab"];
 hours = Array.from({ length: 24 }, (_, i) => `${i}:00`);
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -7,35 +7,75 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { CommonModule } from '@angular/common';
 import { DatePickerModule } from 'primeng/datepicker';
+import { AgendaEvento } from '../../../../shared/classes/agenda-evento';
+import { RadioButton } from "primeng/radiobutton";
 
 
 @Component({
   selector: 'app-event-form',
   standalone: true,
-  imports: [ReactiveFormsModule,InputTextModule,TextareaModule,CheckboxModule,DatePickerModule,MultiSelectModule,FloatLabelModule,CommonModule],
+  imports: [ReactiveFormsModule, InputTextModule, TextareaModule, CheckboxModule, DatePickerModule, MultiSelectModule, FloatLabelModule, CommonModule, RadioButton],
   templateUrl: './event-form.component.html',
   styleUrl: './event-form.component.scss'
 })
 export class EventFormComponent implements OnInit {
-  formGroup!: FormGroup;
+  formEvent!: FormGroup;
   participantesOptions = [
-    { name: 'João Silva', code: '1' },
-    { name: 'Maria Souza', code: '2' },
-    { name: 'Carlos Lima', code: '3' }
+    { name: 'João Silva', id: 0 },
+    { name: 'Maria Souza', id: 0 },
+    { name: 'Carlos Lima', id: 0 }
   ];
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.formGroup = this.fb.group({
-      titulo: [''],
+    this.formEvent = this.fb.group({
+      titulo: ['',[Validators.required]],
       assunto: [''],
-      presencial: [false],
-      remoto: [false],
+      isPresencial: [false],
       local: [''],
       participantes: [[]],
       descricao: [''],
-      dataHora: [null]
+      data: ['',[Validators.required]]
     });
+  }
+
+
+  submit(){
+    const raw = this.formEvent.getRawValue();
+
+    let formValue =
+    {
+      ...raw,
+      data: new Date(raw.data)
+    }
+
+    const evento:AgendaEvento = new AgendaEvento().map(formValue);
+
+    console.log(formValue)
+
+    console.log(evento)
+
+    return evento;
+
+
+
+  }
+
+  reset(){
+    this.formEvent.reset();
+  }
+
+  isInvalid(){
+    return this.formEvent.invalid
+  }
+
+  markDirty(){
+  Object.values(this.formEvent.controls).forEach(control => {
+  control.markAsTouched();
+  control.markAsDirty();
+  control.updateValueAndValidity();
+});
+
   }
 }
