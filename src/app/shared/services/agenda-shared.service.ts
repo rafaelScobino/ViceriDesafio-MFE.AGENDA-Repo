@@ -10,7 +10,7 @@ export class AgendaSharedService {
   private initalAgendaList: AgendaEvento[] = [];
   private agendaConfig: IAgendaConfig = {
     date: new Date(),
-    week: DateUtils.getWeekNumber(new Date()),
+    week: 1,
   };
   private state$ = new BehaviorSubject(this.initalAgendaList);
   private agendaConfigState$ = new BehaviorSubject(this.agendaConfig);
@@ -24,6 +24,7 @@ export class AgendaSharedService {
     ...this.agendaConfig,
     ...update
   };
+  this.agendaConfigState$.next(this.agendaConfig);
   console.log(this.agendaConfig)
 }
 

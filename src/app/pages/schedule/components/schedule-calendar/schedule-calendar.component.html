@@ -8,17 +8,20 @@
   <ng-template pTemplate="header">
     <tr>
       <th style="width: 60px">Hora</th>
-      <th *ngFor="let day of weekDays">{{ day }}</th>
+      <th *ngFor="let i of dayIndexes">
+  {{ weekDays[i] }} <br />
+  <small *ngIf="monthWeekDays[i]">{{ monthWeekDays[i] }}</small>
+</th>
     </tr>
   </ng-template>
 
   <!-- Corpo -->
   <ng-template pTemplate="body" let-hour>
     <tr>
-      <td>{{ hour }}:00</td>
+      <td>{{ hour.hour }}:00</td>
 
       <td *ngFor="let dayIndex of dayIndexes">
-        <ng-container *ngIf="getEvento(hour, dayIndex) as evento">
+        <ng-container *ngIf="getEvento(hour.hour, dayIndex) as evento">
           <div class="bg-blue-500 text-white text-sm rounded p-1">
             {{ evento.titulo }}
           </div>

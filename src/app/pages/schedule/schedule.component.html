@@ -10,8 +10,6 @@
   <div class="flex flex-col flex-1">
     <div class="flex-none" style="height: 10%">
       <app-schedule-header
-      [dateSelector]="dateSelector"
-      [semanaSelector]="semanaSelector"
       (weekEmitter)="changeWeek($event)"
       (dateEmitter)="changeDate($event)"
         (_openModalEvento)="onOpenModalEvento()"
@@ -20,6 +18,7 @@
 
     <div class="flex-1">
       <app-schedule-calendar
+      [agendaList]="agendaList"
       ></app-schedule-calendar>
     </div>
   </div>

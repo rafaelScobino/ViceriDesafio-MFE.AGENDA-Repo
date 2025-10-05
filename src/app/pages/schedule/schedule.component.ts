@@ -21,12 +21,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './schedule.component.scss'
 })
 export class ScheduleComponent implements OnInit, OnDestroy {
-changeDate($event: number) {
-throw new Error('Method not implemented.');
-}
-changeWeek(arg0: any) {
-throw new Error('Method not implemented.');
-}
+
   @ViewChild('modalEvent') modalEvent!: ModalEventComponent;
 
 private stateSubscription!: Subscription;
@@ -57,6 +52,13 @@ ngOnInit(): void {
     if(!e) return
     this.stateService.setState(e);
   }
+
+  changeDate(e: Date) {
+this.stateService.setAgendaConfigState({date:e});
+}
+changeWeek(e: number) {
+this.stateService.setAgendaConfigState({week:e});
+}
 
 ngOnDestroy(){
   this.stateSubscription.unsubscribe()
