@@ -1,32 +1,31 @@
 <div class="agenda_height flex h-full">
-
-
-  <div class="flex-none " style="width: 15%;">
-    <app-schedule-menu></app-schedule-menu>
+  <div class="flex-none" style="width: 15%">
+    <app-schedule-menu
+    [rangeSelector]="rangeSelector"
+    [todayEvents]="todayEvents"
+    [tomorrowEvents]="tomorrowEvents"
+    ></app-schedule-menu>
   </div>
 
-
-  <div class="flex flex-col flex-1 ">
-
-
-    <div class="flex-none " style="height: 10%;">
+  <div class="flex flex-col flex-1">
+    <div class="flex-none" style="height: 10%">
       <app-schedule-header
-      (_openModalEvento)="onOpenModalEvento()"
+      [dateSelector]="dateSelector"
+      [semanaSelector]="semanaSelector"
+      (weekEmitter)="changeWeek($event)"
+      (dateEmitter)="changeDate($event)"
+        (_openModalEvento)="onOpenModalEvento()"
       ></app-schedule-header>
     </div>
 
-
-    <div class="flex-1 ">
-      <app-schedule-calendar></app-schedule-calendar>
+    <div class="flex-1">
+      <app-schedule-calendar
+      ></app-schedule-calendar>
     </div>
-
   </div>
-
 </div>
-
-
-
 
 <app-modal-event
 #modalEvent
+(setEvento)="submitEvento($event)"
 ></app-modal-event>

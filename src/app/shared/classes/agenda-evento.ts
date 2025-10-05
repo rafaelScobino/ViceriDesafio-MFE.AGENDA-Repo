@@ -1,4 +1,8 @@
+
+import { DateUtils } from "../utils/date-util";
+
 export class AgendaEvento{
+  id!:number
   titulo!:string
   assunto!:string
   isPresencial!:boolean
@@ -31,7 +35,7 @@ console.log(dados)
         const date = new Date((dados[k] as any))
         console.log(date)
         this.hora = date.getHours();
-        this.semana  = this.getWeekNumber(date);
+        this.semana  = DateUtils.getWeekNumber(date);
         this.mes = date.getMonth();
         this.diaMes = date.getDate();
         this.diaSemana = date.getDay()
@@ -48,12 +52,6 @@ console.log(dados)
   }
 
 
-getWeekNumber(date:Date){
- const dia = date.getDate();
-    const primeiroDia = new Date(date.getFullYear(), date.getMonth(),1).getDay();
-    return Math.ceil((dia + primeiroDia) / 7);
-}
-
-
 
 }
+

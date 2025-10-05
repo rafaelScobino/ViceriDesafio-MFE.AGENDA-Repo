@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DatePicker } from 'primeng/datepicker';
 import { TableModule } from 'primeng/table';
 
@@ -11,13 +11,14 @@ import { TableModule } from 'primeng/table';
   styleUrl: './schedule-menu.component.scss'
 })
 export class ScheduleMenuComponent {
-todayTasks = [
+  @Input() rangeSelector:number = 0;
+@Input() todayEvents = [
   'Reunião com equipe às 10h',
   'Entrega do relatório até 14h',
   'Revisar documento do projeto'
 ];
 
-tomorrowTasks = [
+@Input() tomorrowEvents = [
   'Apresentação ao cliente às 09h',
   'Enviar e-mails pendentes',
   'Planejamento da sprint'

@@ -1,31 +1,50 @@
 import { AgendaEvento } from './../classes/agenda-evento';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { DateUtils } from '../utils/date-util';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AgendaSharedService {
-private initalAgendaList:AgendaEvento[] = [];
+  private initalAgendaList: AgendaEvento[] = [];
+  private agendaConfig: IAgendaConfig = {
+    date: new Date(),
+    week: DateUtils.getWeekNumber(new Date()),
+  };
+  private state$ = new BehaviorSubject(this.initalAgendaList);
+  private agendaConfigState$ = new BehaviorSubject(this.agendaConfig);
 
-private state$ = new BehaviorSubject(this.initalAgendaList)
+  public getAgendaConfigState() {
+    return this.agendaConfigState$.asObservable();
+  }
 
-public getState(){
-
-
-  return this.state$.asObservable();
+ public setAgendaConfigState(update: Partial<IAgendaConfig>) {
+  this.agendaConfig = {
+    ...this.agendaConfig,
+    ...update
+  };
+  console.log(this.agendaConfig)
 }
 
-public setState(value:AgendaEvento){
+  public getState() {
+    return this.state$.asObservable();
+  }
 
-  const newList:AgendaEvento[] = [...this.initalAgendaList, value];
+  public setState(value: AgendaEvento) {
+    let newEvento = value;
+    newEvento.id = this.initalAgendaList.length;
 
-  this.state$.next(newList);
-  console.log( this.state$);
+    this.initalAgendaList = [...this.initalAgendaList, newEvento];
+
+    this.state$.next(this.initalAgendaList);
+    console.log(this.state$);
+  }
+
+  constructor() {}
 }
 
-
-
-
-  constructor() { }
+export interface IAgendaConfig {
+  date: Date;
+  week: number;
 }

@@ -4,7 +4,7 @@
   <div class="agenda-dia p-4 border rounded">
     <h3 class="font-bold mb-2">Hoje</h3>
     <ul class="list-disc pl-5">
-      <li *ngFor="let item of todayTasks">{{ item }}</li>
+      <li *ngFor="let item of todayEvents">{{ item }}</li>
     </ul>
   </div>
 
@@ -12,7 +12,7 @@
   <div class="agenda-dia p-4 border rounded">
     <h3 class="font-bold mb-2">Amanhã</h3>
     <ul class="list-disc pl-5">
-      <li *ngFor="let item of tomorrowTasks">{{ item }}</li>
+      <li *ngFor="let item of tomorrowEvents">{{ item }}</li>
     </ul>
   </div>
 </div>

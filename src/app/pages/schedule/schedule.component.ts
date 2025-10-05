@@ -1,11 +1,12 @@
 import { AgendaEvento } from './../../shared/classes/agenda-evento';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ScheduleHeaderComponent } from './components/schedule-header/schedule-header.component';
 import { ScheduleMenuComponent } from './components/schedule-menu/schedule-menu.component';
 import { ScheduleCalendarComponent } from './components/schedule-calendar/schedule-calendar.component';
 import { ModalEventComponent } from './components/modals/modal-event/modal-event.component';
 import { SplitterModule } from 'primeng/splitter';
 import { AgendaSharedService } from '../../shared/services/agenda-shared.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-schedule',
   standalone: true,
@@ -19,10 +20,18 @@ import { AgendaSharedService } from '../../shared/services/agenda-shared.service
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.scss'
 })
-export class ScheduleComponent {
+export class ScheduleComponent implements OnInit, OnDestroy {
+changeDate($event: number) {
+throw new Error('Method not implemented.');
+}
+changeWeek(arg0: any) {
+throw new Error('Method not implemented.');
+}
   @ViewChild('modalEvent') modalEvent!: ModalEventComponent;
 
-  mesSelector:Date  = new Date();
+private stateSubscription!: Subscription;
+  agendaList: AgendaEvento[] = [];
+  dateSelector:Date  = new Date();
   semanaSelector:number = 1;
   rangeSelector: number = 1;
   todayEvents:string[] = [];
@@ -30,6 +39,14 @@ export class ScheduleComponent {
 
 
 constructor(private stateService:AgendaSharedService){}
+
+ngOnInit(): void {
+  this.stateSubscription = this.stateService.getState().subscribe((agendaList)=>{
+    this.agendaList = agendaList;
+    console.log(this.agendaList);
+  })
+}
+
 
   onOpenModalEvento(){
     this.modalEvent.open()
@@ -40,6 +57,10 @@ constructor(private stateService:AgendaSharedService){}
     if(!e) return
     this.stateService.setState(e);
   }
+
+ngOnDestroy(){
+  this.stateSubscription.unsubscribe()
+}
 
 
 }

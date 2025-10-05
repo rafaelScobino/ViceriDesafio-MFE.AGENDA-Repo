@@ -1,15 +1,29 @@
-<p-table [value]="hours" [scrollable]="true" [showGridlines]="true" scrollHeight="80vh" styleClass="calendar-table">
+<p-table
+  [value]="hours"
+  [scrollable]="true"
+  [showGridlines]="true"
+  scrollHeight="80vh"
+>
+  <!-- Cabeçalho -->
   <ng-template pTemplate="header">
     <tr>
-      <th style="width: 60px;">Hora</th>
+      <th style="width: 60px">Hora</th>
       <th *ngFor="let day of weekDays">{{ day }}</th>
     </tr>
   </ng-template>
 
+  <!-- Corpo -->
   <ng-template pTemplate="body" let-hour>
     <tr>
-      <td>{{ hour }}</td>
-      <td *ngFor="let day of weekDays" class="calendar-cell"></td>
+      <td>{{ hour }}:00</td>
+
+      <td *ngFor="let dayIndex of dayIndexes">
+        <ng-container *ngIf="getEvento(hour, dayIndex) as evento">
+          <div class="bg-blue-500 text-white text-sm rounded p-1">
+            {{ evento.titulo }}
+          </div>
+        </ng-container>
+      </td>
     </tr>
   </ng-template>
 </p-table>
