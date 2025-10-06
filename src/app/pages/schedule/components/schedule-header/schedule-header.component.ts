@@ -42,7 +42,6 @@ export class ScheduleHeaderComponent {
   }
 
   changeMonth(e: Date) {
-    console.log(e);
     this.changeDate(e);
   }
 

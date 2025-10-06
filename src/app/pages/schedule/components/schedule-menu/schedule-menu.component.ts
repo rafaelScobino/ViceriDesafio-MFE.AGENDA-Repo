@@ -38,8 +38,6 @@ setRange(){
 
     const month = this.month.getMonth();
 const year = this.month.getFullYear();
-
-console.log(d)
     this.rangeDates.push(new Date(year,month,d))
 
   })

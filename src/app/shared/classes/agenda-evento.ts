@@ -22,7 +22,6 @@ export class AgendaEvento{
   }
 
   map(dados:Partial<AgendaEvento>):AgendaEvento{
-console.log(dados)
     Object.keys(dados).forEach((key)=>{
 
       const k = key as keyof AgendaEvento;
@@ -33,7 +32,6 @@ console.log(dados)
 
       if(key == "data"){
         const date = new Date((dados[k] as any))
-        console.log(date)
         this.hora = date.getHours();
         this.semana  = DateUtils.getWeekNumber(date);
         this.mes = date.getMonth();
@@ -46,7 +44,6 @@ console.log(dados)
 
     })
 
-    console.log(this)
     return this;
 
   }

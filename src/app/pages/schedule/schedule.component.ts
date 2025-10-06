@@ -60,7 +60,6 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   setMonthWeekDays(config: IAgendaConfig) {
     const { date, week } = config;
 
-    console.log(config);
     const ano = date.getFullYear();
     const mes = date.getMonth();
 
@@ -76,7 +75,6 @@ export class ScheduleComponent implements OnInit, OnDestroy {
       dias.push(dia > 0 && dia <= diasNoMes ? dia : null);
     }
     this.monthWeekDays = dias;
-    console.log(this.monthWeekDays);
   }
 
   setActualEvents(list:AgendaEvento[]){

@@ -52,10 +52,6 @@ export class EventFormComponent implements OnInit {
 
     const evento:AgendaEvento = new AgendaEvento().map(formValue);
 
-    console.log(formValue)
-
-    console.log(evento)
-
     return evento;
 
 

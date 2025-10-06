@@ -25,7 +25,7 @@ export class AgendaSharedService {
     ...update
   };
   this.agendaConfigState$.next(this.agendaConfig);
-  console.log(this.agendaConfig)
+
 }
 
   public getState() {
@@ -41,7 +41,6 @@ export class AgendaSharedService {
     this.state$.next(this.initalAgendaList);
       this.saveAgendaToStorage();
 
-    console.log(this.state$);
   }
 
    saveAgendaToStorage() {
