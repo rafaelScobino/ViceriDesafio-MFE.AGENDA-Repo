@@ -44,7 +44,7 @@ export class AgendaSharedService {
     console.log(this.state$);
   }
 
-  private saveAgendaToStorage() {
+   saveAgendaToStorage() {
     const simplified = this.initalAgendaList.map(e => ({
       titulo: e.titulo,
       assunto: e.assunto,
